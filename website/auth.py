@@ -19,25 +19,25 @@ def logout():
 def signup():
     if request.method == "POST":
 
-        email = request.form.get(key="email")
-        username = request.form.get(key="username")
-        password1 = request.form.get(key="password")
-        password2 = request.form.get(key="password-confirmation")
+        email = request.form.get("email")
+        username = request.form.get("username")
+        password1 = request.form.get("password")
+        password2 = request.form.get("password-confirmation")
 
         if len(email) < 7:
-            flash("Email too short. Enter a valid email.", category="error")
+            flash("Email too short. Enter a valid email.", "error")
         elif len(username) < 2:
             flash(
-                "Username too short, must be at least 2 characters.", category="error"
+                "Username too short, must be at least 2 characters.", "error"
             )
         elif len(password1) < 7:
             flash(
-                "Password too short, must be at least 8 characters.", category="error"
+                "Password too short, must be at least 8 characters.", "error"
             )
         elif password1 != password2:
-            flash("Passwords don't match.", category="error")
+            flash("Passwords don't match.", "error")
         else:
-            flash("Creating account...", category="success")
+            flash("Creating account...", "success")
             # Add user to database
-            pass
+            flash('Account created!', 'success')
     return render_template("signup.html")
