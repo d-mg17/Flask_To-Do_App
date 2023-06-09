@@ -1,0 +1,35 @@
+{% extends 'base-template.html' %}
+
+
+{% block content %}
+
+<header>
+    <img src="static/images/ToDoAppLogo1.webp" alt="To-Do Logo" class="img-fluid mx-auto d-block rounded-circle" width="200px" height="200px">
+    <h1 class="h1 text-center">{{user.name}}'s DashBoard!</h1>
+    <hr>
+</header>
+
+<main class="container">
+  <h2 class="h2">Notes</h2>
+  <section id="notes_dashboard" class="container text-center">
+    <ul class="list-group list-group-flush" id="notes">
+      {% for note in user.notes %}
+      <li class="list-group-item">
+        {{ note.data }}
+        <button type="button" class="close" onclick="deleteNote({{ note.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <hr>
+  <h2 class="h2">New Note</h2>
+  <form method="PSOT">
+    <textarea name="new_note" id="new_note" class="form-control-plaintext"></textarea><br>
+    <div align="center">
+      <button type="submit" class="btn btn-primary">Add Note</button>
+    </div>
+  </form>
+</main>
+{% endblock %}

@@ -1,6 +1,28 @@
 {% extends 'base-template.html' %}
-{% block title %}HOME{% endblock %}
+
 
 {% block content %}
-    <h1>Welcome!</h1>
+
+<header>
+    <img src="static/images/ToDoAppLogo1.webp" alt="To-Do Logo" class="img-fluid mx-auto d-block rounded-circle" width="200px" height="200px">
+    <h1 class="h1 text-center">To-Do App!</h1>
+    <hr>
+</header>
+<main>
+    <section id="home_intro" class="container">
+        <p class="text-center text-secondary text-uppercase">This is a simple to-do app built with Flask framework.It demonstrates how to build a CRUD application with Flask, SQLAlchemy, and Jinja2. It also shows how to use Bootstrap 4 with Flask. To get started, click on the "Sign-Up" or the "Login" buttons or in the navigation bar.</p>
+    </section>
+    <hr>
+    <section id="home_start_buttons" class="container text-center align-content-center justify-content-center">
+        <div class="row">
+            <div class="col">
+                <a href="/signup" class="btn btn-block btn-primary text-uppercase m-auto">Sign Up</a><br>
+            </div>
+            <div class="col">
+                <a href="/login" class="btn btn-block btn-outline-primary text-uppercase m-auto">Login</a>
+            </div>
+        </div>
+    </section>
+</main>
+
 {% endblock %}
