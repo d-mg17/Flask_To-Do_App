@@ -10,14 +10,15 @@ auth = Blueprint("auth", __name__)
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        password = request.data.get('password')
-        username = request.data.get('username')
+        password = request.form.get('password')
+        username = request.form.get('username')
     
-        user = User.query.filter_by(username).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             if check_password_hash(user.password, password):
                 flash("Welcome back!", category='success')
-                redirect(url_for('views.index'))
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
             else:
                 flash("Incorrect passsword, please try again", category='error')
         else:
@@ -43,7 +44,7 @@ def signup():
         password1 = request.form.get("password")
         password2 = request.form.get("password-confirmation")
 
-        user = User.query.filter_by(username).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             flash('Username already exists, please try again', category='error')
         elif len(email) < 7:

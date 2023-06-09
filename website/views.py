@@ -8,7 +8,7 @@ views = Blueprint("views",__name__)
 
 @views.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", user=current_user)
 
 @views.route('/home', methods=['GET', 'POST'])
 @login_required
@@ -16,7 +16,7 @@ def home():
     if request.method == "POST":
         note = request.form.get("new_note")
         
-        if len(note) < 1:
+        if len(note) < 2:
             flash(message="Note is too short!", category="error")
         else:
             new_note = Note(data=note, user_id=current_user.id)
@@ -32,9 +32,9 @@ def delete_note():
     note = json.loads(request.data)
     note_id = note['noteId']
     target_note = Note.query.get(note_id)
-    if targer_note:
-        if note.user_id == current_user.id:
-            db.session.delete(note)
+    if target_note:
+        if target_note.user_id == current_user.id:
+            db.session.delete(target_note)
             db.session.commit()
             return jsonify({"message": "Note deleted!"})
     return jsonify({"message": "Note not found."})

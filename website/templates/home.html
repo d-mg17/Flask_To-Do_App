@@ -5,14 +5,14 @@
 
 <header>
     <img src="static/images/ToDoAppLogo1.webp" alt="To-Do Logo" class="img-fluid mx-auto d-block rounded-circle" width="200px" height="200px">
-    <h1 class="h1 text-center">{{user.name}}'s DashBoard!</h1>
+    <h1 class="h1 text-center">{{user.username}}'s DashBoard!</h1>
     <hr>
 </header>
 
 <main class="container">
   <h2 class="h2">Notes</h2>
   <section id="notes_dashboard" class="container text-center">
-    <ul class="list-group list-group-flush" id="notes">
+    <ul class="list-group" id="notes">
       {% for note in user.notes %}
       <li class="list-group-item">
         {{ note.data }}
@@ -25,8 +25,8 @@
   </section>
   <hr>
   <h2 class="h2">New Note</h2>
-  <form method="PSOT">
-    <textarea name="new_note" id="new_note" class="form-control-plaintext"></textarea><br>
+  <form method="POST">
+    <textarea name="new_note" id="new_note" class="form-control" rows="4" cols="30" style="resize: none;"></textarea><br>
     <div align="center">
       <button type="submit" class="btn btn-primary">Add Note</button>
     </div>
