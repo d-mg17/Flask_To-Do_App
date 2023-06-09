@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, request, flash, url_for
 from .models import User
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint("auth", __name__)
 
@@ -23,11 +24,13 @@ def login():
             flash('User not found', category='error')
 
     
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 
 @auth.route("/logout")
+@login_required
 def logout():
+    logout_user()
     return redirect(url_for('views.index'))
 
 
@@ -45,16 +48,18 @@ def signup():
             flash('Username already exists, please try again', category='error')
         elif len(email) < 7:
             flash("Email too short. Enter a valid email.", category= "error")
-        elif len(username) < 2:
+        elif "+" in email or "@" not in email:
+            flash("Enter a valid email.", category= "error")
+        elif len(username) < 6:
             flash(
-                "Username too short, must be at least 2 characters.", category="error"
+                "Username too short, must be at least 6 characters.", category="error"
             )
-        elif len(password1) < 7:
+        elif len(password1) < 8:
             flash(
                 "Password too short, must be at least 8 characters.", category="error"
             )
         elif password1 != password2:
-            flash("Passwords don't match.", category="error")
+            flash("Passwords don\'t match.", category="error")
         else:
             flash("Creating account...", category="success")
             
@@ -63,8 +68,8 @@ def signup():
             db.session.add(new_user)
             db.session.commit()            
             
-            flash('Account created!', 'success')
+            flash('Account created!', category='success')
             
-            return redirect(url_for('views.index'))
+            return redirect(url_for('views.home'))
             
-    return render_template("signup.html")
+    return render_template("signup.html", user=current_user)
